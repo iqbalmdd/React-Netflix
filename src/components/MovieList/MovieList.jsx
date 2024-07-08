@@ -1,11 +1,12 @@
 import React, { useEffect , useState } from "react";
-
+import axios from "axios";
 import _ from "lodash"
 
 import "./MovieList.css";
 import MovieCard from "./MovieCard";
 import FilterGroup from "./FilterGroup";
-import axios from "axios";
+import ApiKey from "../../../.env"
+
 
 const MovieList = ({type, title, emoji}) => {
   const [movies, setMovies] = useState([]);
@@ -30,7 +31,7 @@ const MovieList = ({type, title, emoji}) => {
   // Using Fetch
   const fetchMovies = async () => {
     const response = await fetch(
-      `https://api.themoviedb.org/3/movie/${type}?api_key=48b3b77648c073570cbceeeb6abb0525`
+      `https://api.themoviedb.org/3/movie/${type}?api_key=${ApiKey}`
     );
     const data = await response.json();
     setMovies(data.results);
@@ -40,7 +41,7 @@ const MovieList = ({type, title, emoji}) => {
     const axiosMovies = async () => {
       try {
         const response = await axios.get(
-          `https://api.themoviedb.org/3/movie/${type}?api_key=48b3b77648c073570cbceeeb6abb0525`
+          `https://api.themoviedb.org/3/movie/${type}?api_key=${ApiKey}`
         );
         const data = response.data;
         setMovies(data.results);
