@@ -29,6 +29,7 @@
     height: 30px;
     padding: 0 5px;
     margin: 0 10px;
+    cursor: pointer;
 }
 .movie_cards {
     display: flex;

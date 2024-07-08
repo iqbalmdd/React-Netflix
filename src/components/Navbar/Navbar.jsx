@@ -7,7 +7,7 @@ import Party from "../../assets/images/partying-face.png"
 const Navbar = () => {
   return (
     <nav className='navbar'>
-        <h1>Enigma Movie</h1>
+        <h1>Bale Movie</h1>
         <div className="navbar_links">
             <a href="">
                 Popular
