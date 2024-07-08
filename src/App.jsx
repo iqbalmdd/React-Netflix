@@ -13,8 +13,8 @@ const App = () => {
     <div className='app'>
       <Navbar />
       <MovieList type="popular" title="Popular" emoji={Fire} />
-      <MovieList type="top_rated" title="Popular" emoji={Star} />
-      <MovieList type="upcoming" title="Popular" emoji={Party} />
+      <MovieList type="top_rated" title="Top Rated" emoji={Star} />
+      <MovieList type="upcoming" title="Upcoming" emoji={Party} />
     </div>
   )
 }

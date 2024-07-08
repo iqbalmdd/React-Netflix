@@ -13,7 +13,7 @@ const MovieList = ({type, title, emoji}) => {
     by: "default",
     order : "asc"
   })
-
+ 
   useEffect(() => {
     fetchMovies();
   }, []);
@@ -25,6 +25,7 @@ const MovieList = ({type, title, emoji}) => {
     }
   }, [sort])
 
+  // Using Fetch
   const fetchMovies = async () => {
     const response = await fetch(
       `https://api.themoviedb.org/3/movie/${type}?api_key=48b3b77648c073570cbceeeb6abb0525`
@@ -40,7 +41,7 @@ const MovieList = ({type, title, emoji}) => {
       setFilterMovie(movies);
     } else {
       setMinRating(rate);
-      const filtered = movies.filter((movie) => movie.vote_average >= rate);
+      const filtered = movies.filter((movie) => movie.vote_average >= rate && movie.vote_average < rate+1);
       setFilterMovie(filtered);
     }
   };
@@ -60,7 +61,7 @@ const MovieList = ({type, title, emoji}) => {
         </h2>
 
         <div className="align_center movie_list_fs">
-          <FilterGroup minRating={minRating} onRatingClick={handleFilter} ratings={[7,6,5]} />
+          <FilterGroup minRating={minRating} onRatingClick={handleFilter} ratings={[8,7,6]} />
 
           <select name="by" id="" onChange={handleSort} value={sort.by} className="movie_sorting">
             <option value="default">Sort By</option>
