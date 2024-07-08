@@ -5,7 +5,7 @@
 }
 .movie_list_heading {
     font-size: 26px;
-    color: #ffe400;
+    color: var(--heading_color);
 }
 .movie_filter {
     list-style: none;

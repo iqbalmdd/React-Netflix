@@ -3,15 +3,31 @@
   src: url("./assets/fonts/Montserrat.woff2");
 }
 
+:root {
+  --body_background : #101010;
+  --body_color : white;
+  --heading_color: #ffe400;
+}
+[data-theme="light"] {
+  --body_background : white;
+  --body_color : black;
+  --heading_color: black;
+}
+
 * {
   margin: 0;
   padding: 0;
   box-sizing: border-box;
+  transition: 0.3s all ease-in-out;
+}
+
+html {
+  scroll-behavior: smooth;
 }
 
 body {
-  background-color: #101010;
-  color: #fff;
+  background-color: var(--body_background);
+  color: var(--body_color);
   font-family: "Montserrat", sans-serif;
 }
 

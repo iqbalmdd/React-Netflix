@@ -1,73 +1,84 @@
-import React from "react";
+import React, { useEffect , useState } from "react";
+import _ from "lodash"
+
 import "./MovieList.css";
-import Fire from "../../assets/images/fire.png"
 import MovieCard from "./MovieCard";
-import { useEffect } from "react";
-import { useState } from "react";
+import FilterGroup from "./FilterGroup";
 
-const MovieList = () => {
-    const [movies, setMovies] = useState([])
-    const [filterMovie, setFilterMovie] = useState([])
-    const [minRating, setMinRating] = useState(0)
+const MovieList = ({type, title, emoji}) => {
+  const [movies, setMovies] = useState([]);
+  const [filterMovie, setFilterMovie] = useState([]);
+  const [minRating, setMinRating] = useState(0);
+  const [sort, setSort] = useState({
+    by: "default",
+    order : "asc"
+  })
 
-    useEffect(() => {
-        fetchMovies()
-    } , [])
-    
-    const fetchMovies = async () => {
-        const response = await fetch(
-            "https://api.themoviedb.org/3/movie/popular?api_key=48b3b77648c073570cbceeeb6abb0525"
-        )
-        const data = await response.json()
-        setMovies(data.results)
-        setFilterMovie(data.results)
+  useEffect(() => {
+    fetchMovies();
+  }, []);
+
+  useEffect(() => {
+    if (sort.by !== "default") {
+        const sortedMovies = _.orderBy(filterMovie, [sort.by] , [sort.order])
+        setFilterMovie(sortedMovies)
     }
+  }, [sort])
 
-    const handleFilter = rate => {
-        if (rate === minRating) {
-            setMinRating(0)
-            setFilterMovie(movies)
-        } else {
-        setMinRating(rate)
-        const filtered = movies.filter(movie => movie.vote_average >= rate)
-        setFilterMovie(filtered) }
+  const fetchMovies = async () => {
+    const response = await fetch(
+      `https://api.themoviedb.org/3/movie/${type}?api_key=48b3b77648c073570cbceeeb6abb0525`
+    );
+    const data = await response.json();
+    setMovies(data.results);
+    setFilterMovie(data.results);
+  };
+
+  const handleFilter = (rate) => {
+    if (rate === minRating) {
+      setMinRating(0);
+      setFilterMovie(movies);
+    } else {
+      setMinRating(rate);
+      const filtered = movies.filter((movie) => movie.vote_average >= rate);
+      setFilterMovie(filtered);
     }
+  };
+
+  const handleSort = e => {
+    const {name, value} = e.target;
+    setSort(prev => ({...prev, [name]:value}))
+  }
+  console.log(sort)
 
   return (
-    <section className="movie_list">
+    <section className="movie_list" id={type}>
       <header className="movie_list_header align_center">
         <h2 className="movie_list_heading align_center">
-          Popular
-          <img className="navbar_emoji" src={Fire} alt="fire emoji" />
+          {title}
+          <img className="navbar_emoji" src={emoji} alt={`${emoji} icon`} />
         </h2>
 
         <div className="align_center movie_list_fs">
-            <ul className="align_center movie_filter">
-                <li className={minRating === 8 ? "movie_filter_item active" : "movie_filter_item" } 
-                onClick={() => handleFilter(8)}>8+ star</li>
-                <li className={minRating === 7 ? "movie_filter_item active" : "movie_filter_item" } onClick={() => handleFilter(7)}>7+ star</li>
-                <li className={minRating === 6 ? "movie_filter_item active" : "movie_filter_item" } onClick={() => handleFilter(6)}>6+ star</li>
-            </ul>
+          <FilterGroup minRating={minRating} onRatingClick={handleFilter} ratings={[7,6,5]} />
 
-            <select name="" id="" className="movie_sorting">
-                <option value="">Sort By</option>
-                <option value="">Date</option>
-                <option value="">Rating</option>
-            </select>
+          <select name="by" id="" onChange={handleSort} value={sort.by} className="movie_sorting">
+            <option value="default">Sort By</option>
+            <option value="release_date">Date</option>
+            <option value="vote_average">Rating</option>
+          </select>
 
-            <select name="" id="" className="movie_sorting">
-                <option value="">Ascending</option>
-                <option value="">Descending</option>
-            </select>
+          <select name="order" id="" onChange={handleSort} value={sort.order} className="movie_sorting">
+            <option value="asc">Ascending</option>
+            <option value="desc">Descending</option>
+          </select>
         </div>
       </header>
 
       <div className="movie_cards">
-        {
-            filterMovie.map(
-                movie => <MovieCard key={movie.id} movie={movie} />
-                )
-        }
+        {filterMovie.map((movie) => (
+          <MovieCard key={movie.id} movie={movie} />
+        ))}
       </div>
     </section>
   );
