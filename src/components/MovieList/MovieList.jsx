@@ -1,9 +1,11 @@
 import React, { useEffect , useState } from "react";
+
 import _ from "lodash"
 
 import "./MovieList.css";
 import MovieCard from "./MovieCard";
 import FilterGroup from "./FilterGroup";
+import axios from "axios";
 
 const MovieList = ({type, title, emoji}) => {
   const [movies, setMovies] = useState([]);
@@ -15,7 +17,7 @@ const MovieList = ({type, title, emoji}) => {
   })
  
   useEffect(() => {
-    fetchMovies();
+    axiosMovies();
   }, []);
 
   useEffect(() => {
@@ -34,6 +36,19 @@ const MovieList = ({type, title, emoji}) => {
     setMovies(data.results);
     setFilterMovie(data.results);
   };
+    // Using axios
+    const axiosMovies = async () => {
+      try {
+        const response = await axios.get(
+          `https://api.themoviedb.org/3/movie/${type}?api_key=48b3b77648c073570cbceeeb6abb0525`
+        );
+        const data = response.data;
+        setMovies(data.results);
+        setFilterMovie(data.results);
+      } catch (error) {
+        console.error("Error fetching movies:", error);
+      }
+    };
 
   const handleFilter = (rate) => {
     if (rate === minRating) {
