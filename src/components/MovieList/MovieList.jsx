@@ -1,30 +1,35 @@
-import React, { useEffect , useState } from "react";
+import React, { useEffect, useState } from "react";
 import axios from "axios";
-import _ from "lodash"
+import _ from "lodash";
 
 import "./MovieList.css";
 import MovieCard from "./MovieCard";
 import FilterGroup from "./FilterGroup";
 
-const MovieList = ({type, title, emoji}) => {
+const MovieList = ({ type, title, emoji }) => {
   const [movies, setMovies] = useState([]);
   const [filterMovie, setFilterMovie] = useState([]);
   const [minRating, setMinRating] = useState(0);
   const [sort, setSort] = useState({
     by: "default",
-    order : "asc"
-  })
- 
+    order: "asc",
+  });
+  const [axiosData, setAxiosData] = useState({
+    post: [],
+    loading: true,
+    error: null,
+  });
+
   useEffect(() => {
-    axiosMovies();
+    fetchMoviesAxios();
   }, []);
 
   useEffect(() => {
     if (sort.by !== "default") {
-        const sortedMovies = _.orderBy(filterMovie, [sort.by] , [sort.order])
-        setFilterMovie(sortedMovies)
+      const sortedMovies = _.orderBy(filterMovie, [sort.by], [sort.order]);
+      setFilterMovie(sortedMovies);
     }
-  }, [sort])
+  }, [sort]);
 
   // Using Fetch
   const fetchMovies = async () => {
@@ -35,19 +40,27 @@ const MovieList = ({type, title, emoji}) => {
     setMovies(data.results);
     setFilterMovie(data.results);
   };
-    // Using axios
-    const axiosMovies = async () => {
-      try {
-        const response = await axios.get(
-          `https://api.themoviedb.org/3/movie/${type}?api_key=48b3b77648c073570cbceeeb6abb0525`
-        );
-        const data = response.data;
-        setMovies(data.results);
-        setFilterMovie(data.results);
-      } catch (error) {
-        console.error("Error fetching movies:", error);
-      }
-    };
+  // Using axios
+  const fetchMoviesAxios = async () => {
+    try {
+      const response = await axios.get(
+        `https://api.themoviedb.org/3/movie/${type}?api_key=48b3b77648c073570cbceeeb6abb0525`
+      );
+      setMovies(response.data.results);
+      setFilterMovie(response.data.results);
+      setAxiosData({
+        post: movies,
+        loading: false,
+        error: null,
+      });
+    } catch (error) {
+      setAxiosData({
+        post: [],
+        loading: false,
+        error: error.message,
+      });
+    }
+  };
 
   const handleFilter = (rate) => {
     if (rate === minRating) {
@@ -55,16 +68,18 @@ const MovieList = ({type, title, emoji}) => {
       setFilterMovie(movies);
     } else {
       setMinRating(rate);
-      const filtered = movies.filter((movie) => movie.vote_average >= rate && movie.vote_average < rate+1);
+      const filtered = movies.filter(
+        (movie) => movie.vote_average >= rate && movie.vote_average < rate + 1
+      );
       setFilterMovie(filtered);
     }
   };
 
-  const handleSort = e => {
-    const {name, value} = e.target;
-    setSort(prev => ({...prev, [name]:value}))
-  }
-  console.log(sort)
+  const handleSort = (e) => {
+    const { name, value } = e.target;
+    setSort((prev) => ({ ...prev, [name]: value }));
+  };
+  console.log(sort);
 
   return (
     <section className="movie_list" id={type}>
@@ -75,15 +90,31 @@ const MovieList = ({type, title, emoji}) => {
         </h2>
 
         <div className="align_center movie_list_fs">
-          <FilterGroup minRating={minRating} onRatingClick={handleFilter} ratings={[8,7,6]} />
+          <FilterGroup
+            minRating={minRating}
+            onRatingClick={handleFilter}
+            ratings={[8, 7, 6]}
+          />
 
-          <select name="by" id="" onChange={handleSort} value={sort.by} className="movie_sorting">
+          <select
+            name="by"
+            id=""
+            onChange={handleSort}
+            value={sort.by}
+            className="movie_sorting"
+          >
             <option value="default">Sort By</option>
             <option value="release_date">Date</option>
             <option value="vote_average">Rating</option>
           </select>
 
-          <select name="order" id="" onChange={handleSort} value={sort.order} className="movie_sorting">
+          <select
+            name="order"
+            id=""
+            onChange={handleSort}
+            value={sort.order}
+            className="movie_sorting"
+          >
             <option value="asc">Ascending</option>
             <option value="desc">Descending</option>
           </select>
