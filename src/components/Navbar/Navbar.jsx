@@ -1,24 +1,30 @@
-import React, { useState } from "react";
+import React, { useState, useRef } from "react";
 import DarkMode from "../DarkMode/DarkMode";
 import "./Navbar.css";
 import Search from "../../assets/images/search.png";
 import Profile from "../../assets/images/SAYA.jpg";
 
-const Navbar = ({onSearch}) => {
+const Navbar = ({ onSearch }) => {
   const [activeLink, setActiveLink] = useState("#popular");
   const [showSearchBar, setShowSearchBar] = useState(false);
+  const searchInputRef = useRef(null);
 
   const toggleSearchBar = () => {
     setShowSearchBar(!showSearchBar);
+    if (!showSearchBar) {
+      setTimeout(() => {
+        searchInputRef.current.focus();
+      }, 300); // Delay untuk memastikan input bar sudah muncul sebelum fokus
+    }
   };
 
   const handleClick = (id) => {
     setActiveLink(id);
   };
-  const handleSearch = e => {
+  const handleSearch = (e) => {
     const value = e.target.value.toLowerCase();
     onSearch(value);
-  }
+  };
 
   return (
     <nav className="navbar">
@@ -52,7 +58,12 @@ const Navbar = ({onSearch}) => {
         <DarkMode />
         {showSearchBar && (
           <div className="search_bar">
-            <input type="text" placeholder="Search..." onChange={handleSearch} />
+            <input
+              type="text"
+              placeholder="Search..."
+              ref={searchInputRef}
+              onChange={handleSearch}
+            />
           </div>
         )}
         <img
