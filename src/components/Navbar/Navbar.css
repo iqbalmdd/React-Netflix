@@ -10,9 +10,16 @@
     background-color: var(--body_background);
 }
 
-.navbar > h1 {
-    font-size: 30px;
+.nav_left > h1 {
+    font-size: 40px;
     color: var(--heading_color);
+    font-family: "Graphique";
+    font-weight: 400;
+    font-style: normal;
+    margin-right: 20px;
+}
+.nav_right {
+    display: flex;
 }
 
 .navbar_links {
@@ -23,8 +30,9 @@
 .navbar_links > a {
     display: flex;
     align-items: center;
-    font-size: 20px;
+    font-size: 15px;
     font-weight: 500;
+    font-family: "Montserrat", sans-serif;
     color: var(--body_color);
     text-decoration: none;
     padding: 0 15px;
@@ -39,4 +47,21 @@
 #popular, #top_rated, #upcoming {
     scroll-margin-top: 85px;
 }
+.nav_left {
+    display: flex;
+}
 
+.search_image {
+    width: 30px;
+    height: 30px;
+    margin-left: 15px;
+    cursor: pointer;
+}
+
+.profile_image {
+    width: 35px;
+    height: 35px;
+    margin-left: 15px;
+    border-radius: 500px;
+    cursor: pointer;
+}

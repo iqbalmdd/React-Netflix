@@ -2,11 +2,15 @@
   font-family: "Montserrat";
   src: url("./assets/fonts/Montserrat.woff2");
 }
+@font-face {
+  font-family: "Graphique";
+  src: url("./assets/fonts/Graphique.ttf");
+}
 
 :root {
   --body_background : #101010;
   --body_color : white;
-  --heading_color: #ffe400;
+  --heading_color: #d91525;
 }
 [data-theme="light"] {
   --body_background : white;
