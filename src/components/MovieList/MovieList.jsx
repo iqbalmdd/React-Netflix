@@ -6,7 +6,7 @@ import "./MovieList.css";
 import MovieCard from "./MovieCard";
 import FilterGroup from "./FilterGroup";
 
-const MovieList = ({ type, title, emoji }) => {
+const MovieList = ({ type, title, emoji, searchFilter }) => {
   const [movies, setMovies] = useState([]);
   const [filterMovie, setFilterMovie] = useState([]);
   const [minRating, setMinRating] = useState(0);
@@ -19,7 +19,7 @@ const MovieList = ({ type, title, emoji }) => {
     loading: true,
     error: null,
   });
-  
+
   useEffect(() => {
     fetchMoviesAxios();
   }, []);
@@ -74,6 +74,18 @@ const MovieList = ({ type, title, emoji }) => {
       setFilterMovie(filtered);
     }
   };
+
+  // Filter Search
+  useEffect(() => {
+    if (searchFilter) {
+      const filtered = movies.filter(movie => 
+        movie.original_title.toLowerCase().includes(searchFilter)
+        );
+        setFilterMovie(filtered)
+    } else {
+      setFilterMovie(movies)
+    }
+  } , [searchFilter,movies])
 
   const handleSort = (e) => {
     const { name, value } = e.target;

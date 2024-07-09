@@ -4,9 +4,10 @@ import "./Navbar.css";
 import Search from "../../assets/images/search.png";
 import Profile from "../../assets/images/SAYA.jpg";
 
-const Navbar = () => {
+const Navbar = ({onSearch}) => {
   const [activeLink, setActiveLink] = useState("#popular");
   const [showSearchBar, setShowSearchBar] = useState(false);
+  const [setsearchFilter, setSearchFilter] = useState("")
 
   const toggleSearchBar = () => {
     setShowSearchBar(!showSearchBar);
@@ -15,6 +16,11 @@ const Navbar = () => {
   const handleClick = (id) => {
     setActiveLink(id);
   };
+  const handleSearch = e => {
+    const value = e.target.value.toLowerCase();
+    setSearchFilter(value);
+    onSearch(value);
+  }
 
   return (
     <nav className="navbar">
@@ -48,7 +54,7 @@ const Navbar = () => {
         <DarkMode />
         {showSearchBar && (
           <div className="search_bar">
-            <input type="text" placeholder="Search..." />
+            <input type="text" placeholder="Search..." onChange={handleSearch} />
           </div>
         )}
         <img
