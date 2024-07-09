@@ -91,7 +91,6 @@ const MovieList = ({ type, title, emoji, searchFilter }) => {
     const { name, value } = e.target;
     setSort((prev) => ({ ...prev, [name]: value }));
   };
-  console.log(sort);
 
   return (
     <section className="movie_list" id={type}>

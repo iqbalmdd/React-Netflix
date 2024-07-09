@@ -7,7 +7,6 @@ import Profile from "../../assets/images/SAYA.jpg";
 const Navbar = ({onSearch}) => {
   const [activeLink, setActiveLink] = useState("#popular");
   const [showSearchBar, setShowSearchBar] = useState(false);
-  const [setsearchFilter, setSearchFilter] = useState("")
 
   const toggleSearchBar = () => {
     setShowSearchBar(!showSearchBar);
@@ -18,7 +17,6 @@ const Navbar = ({onSearch}) => {
   };
   const handleSearch = e => {
     const value = e.target.value.toLowerCase();
-    setSearchFilter(value);
     onSearch(value);
   }
 
