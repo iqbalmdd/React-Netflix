@@ -36,6 +36,12 @@
     color: var(--body_color);
     text-decoration: none;
     padding: 0 15px;
+    opacity: 70%;
+}
+.navbar_links > a.active {
+    color: white;
+    opacity: 100%;
+    font-weight: 600;
 }
 
 .navbar_emoji {
@@ -65,3 +71,4 @@
     border-radius: 500px;
     cursor: pointer;
 }
+

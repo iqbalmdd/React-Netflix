@@ -19,7 +19,7 @@ const MovieList = ({ type, title, emoji }) => {
     loading: true,
     error: null,
   });
-
+  
   useEffect(() => {
     fetchMoviesAxios();
   }, []);
@@ -84,12 +84,14 @@ const MovieList = ({ type, title, emoji }) => {
   return (
     <section className="movie_list" id={type}>
       <header className="movie_list_header align_center">
+        {/* Title */}
         <h2 className="movie_list_heading align_center">
           {title}
           <img className="navbar_emoji" src={emoji} alt={`${emoji} icon`} />
         </h2>
-
+        {/* Filter */}
         <div className="align_center movie_list_fs">
+          {/* Rating */}
           <FilterGroup
             minRating={minRating}
             onRatingClick={handleFilter}
@@ -102,7 +104,8 @@ const MovieList = ({ type, title, emoji }) => {
             onChange={handleSort}
             value={sort.by}
             className="movie_sorting"
-          >
+          > 
+          {/* Sorting by */}
             <option value="default">Sort By</option>
             <option value="release_date">Date</option>
             <option value="vote_average">Rating</option>
@@ -115,6 +118,7 @@ const MovieList = ({ type, title, emoji }) => {
             value={sort.order}
             className="movie_sorting"
           >
+            {/* Order by */}
             <option value="asc">Ascending</option>
             <option value="desc">Descending</option>
           </select>
