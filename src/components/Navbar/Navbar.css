@@ -58,8 +58,8 @@
 }
 
 .search_image {
-    width: 30px;
-    height: 30px;
+    width: 25px;
+    height: 25px;
     margin-left: 15px;
     cursor: pointer;
     z-index: 1;
@@ -69,12 +69,9 @@
     width: 35px;
     height: 35px;
     margin-left: 15px;
-    border-radius: 500px;
+    border-radius: 5px;
     cursor: pointer;
 }
-.search_bar {
-    
-  }
   
   .search_bar input {
     background-color: var(--body_background);
