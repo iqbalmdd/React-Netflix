@@ -1,5 +1,9 @@
 # Bale Movie App
 
+![2024-07-10](https://github.com/iqbalmdd/React-Netflix/assets/113752755/de4cf9b3-4d69-4c2a-aef6-70642506fadc)
+
+
+
 ## Description
 Bale Movie App is a web application that allows users to explore popular, top-rated, and upcoming movies. Users can filter movies by rating and sort them by date or rating. This app uses the TMDB API to fetch movie data.
 
